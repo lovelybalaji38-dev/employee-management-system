@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #4e54c8;
+    --secondary: #8f94fb;
+    --text-dark: #2d3748;
+    --text-light: #718096;
+    --bg-color: #f7fafc;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: var(--text-dark);
+}
+
+/* Glassmorphism Elements */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.15);
+}
+
+.auth-card {
+    border-top: 4px solid var(--primary);
+    padding: 2.5rem !important;
+}
+
+/* Navbar */
+.navbar.glass-nav {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Sidebar */
+.sidebar {
+    min-height: calc(100vh - 70px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid var(--glass-border);
+    padding-top: 2rem;
+}
+.sidebar .nav-link {
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 0.8rem 1.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background: var(--primary);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* Main Content Area */
+main {
+    padding: 2rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    background: linear-gradient(to right, var(--secondary), var(--primary));
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(78, 84, 200, 0.4);
+}
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+/* Cards (Equal height grid) */
+.dashboard-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.dashboard-card h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Profile Image */
+.profile-img-lg {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.profile-img-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s;
+}
+.form-control:focus, .form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(78, 84, 200, 0.25);
+    border-color: var(--primary);
+}
+
+/* Badge customizations */
+.badge.bg-success { background-color: #38c172 !important; }
+.badge.bg-warning { background-color: #f6993f !important; }
+.badge.bg-danger { background-color: #e3342f !important; }
+.badge.bg-info { background-color: #6cb2eb !important; }
+
+/* Click Animations */
+a, button {
+    transition: all 0.2s ease-in-out !important;
+}
+a:active, button:active {
+    transform: scale(0.95) !important;
+}
+
+/* Utilities */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+.password-toggle-icon:hover {
+    color: var(--primary);
+}
+
+.input-group {
+    position: relative;
+}

@@ -29,7 +29,11 @@
     <div class="col">
         <div class="glass-card text-center p-4 h-100 d-flex flex-column">
             <div class="mb-3">
-                <img src="{{ employee.profile_image.url }}" alt="{{ employee.user.first_name }}" class="profile-img-lg mb-2">
+                {% load static %}
+
+              <img src="{% if employee.profile_image %}{{ employee.profile_image.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}" 
+                alt="{{ employee.user.first_name }}" 
+                class="profile-img-lg mb-2">
                 <h5 class="fw-bold mb-0">{{ employee.user.first_name }} {{ employee.user.last_name }}</h5>
                 <p class="text-muted small mb-0">{{ employee.user.role }}</p>
             </div>
