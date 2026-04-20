@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Employees{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <h2 class="fw-bold text-primary">Employees</h2>
+    {% if user.role in 'Admin,HR' %}
+    <a href="{% url 'add_employee' %}" class="btn btn-primary">
+        <i class="bi bi-person-plus me-1"></i> Add Employee
+    </a>
+    {% endif %}
+</div>
+
+<!-- Search and Filter -->
+<div class="glass-card p-3 mb-4">
+    <form method="get" class="row g-3">
+        <div class="col-md-10">
+            <input type="text" name="q" class="form-control" placeholder="Search by Name, ID, Department, or Role..." value="{{ query }}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+</div>
+
+<!-- Employee Grid -->
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-4">
+    {% for employee in page_obj %}
+    <div class="col">
+        <div class="glass-card text-center p-4 h-100 d-flex flex-column">
+            <div class="mb-3">
+                <img src="{{ employee.profile_image.url }}" alt="{{ employee.user.first_name }}" class="profile-img-lg mb-2">
+                <h5 class="fw-bold mb-0">{{ employee.user.first_name }} {{ employee.user.last_name }}</h5>
+                <p class="text-muted small mb-0">{{ employee.user.role }}</p>
+            </div>
+            
+            <div class="mt-auto">
+                <p class="mb-1"><i class="bi bi-building me-2"></i>{{ employee.department.name|default:"N/A" }}</p>
+                <p class="mb-3"><i class="bi bi-telephone me-2"></i>{{ employee.phone_number }}</p>
+                
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="{% url 'employee_detail' employee.pk %}" class="btn btn-sm btn-outline-primary" title="View">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    {% if user.role in 'Admin,HR' %}
+                    <a href="{% url 'edit_employee' employee.pk %}" class="btn btn-sm btn-outline-secondary" title="Edit">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    {% endif %}
+                    {% if user.role == 'Admin' %}
+                    <a href="{% url 'delete_employee' employee.pk %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <h4 class="text-muted">No employees found.</h4>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">Previous</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+        
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}{% if query %}&q={{ query }}{% endif %}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}">Next</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

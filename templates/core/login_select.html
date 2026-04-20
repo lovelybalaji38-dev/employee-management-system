@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Select Login Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-12 text-center mb-5">
+        <h2 class="fw-bold text-primary display-5">Welcome to EMS</h2>
+        <p class="text-muted fs-5">Please select your login portal to continue</p>
+    </div>
+    
+    <div class="col-12 col-lg-10">
+        <div class="row g-4 justify-content-center">
+            
+            <!-- Employee Login -->
+            <div class="col-md-4">
+                <a href="{% url 'employee_login' %}" class="text-decoration-none text-dark">
+                    <div class="glass-card text-center p-5 h-100 d-flex flex-column justify-content-center align-items-center cursor-pointer shadow-sm">
+                        <i class="bi bi-person-workspace display-1 text-primary mb-3"></i>
+                        <h3 class="fw-bold">Employee Portal</h3>
+                        <p class="text-muted mb-0">Access your profile and tasks</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- HR Login -->
+            <div class="col-md-4">
+                <a href="{% url 'hr_login' %}" class="text-decoration-none text-dark">
+                    <div class="glass-card text-center p-5 h-100 d-flex flex-column justify-content-center align-items-center cursor-pointer shadow-sm" style="border-top: 4px solid var(--info);">
+                        <i class="bi bi-person-badge display-1 text-info mb-3"></i>
+                        <h3 class="fw-bold">HR Portal</h3>
+                        <p class="text-muted mb-0">Manage employees and tasks</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Admin Login -->
+            <div class="col-md-4">
+                <a href="{% url 'admin_login' %}" class="text-decoration-none text-dark">
+                    <div class="glass-card text-center p-5 h-100 d-flex flex-column justify-content-center align-items-center cursor-pointer shadow-sm" style="border-top: 4px solid var(--danger);">
+                        <i class="bi bi-shield-lock display-1 text-danger mb-3"></i>
+                        <h3 class="fw-bold">Admin Portal</h3>
+                        <p class="text-muted mb-0">Full system administration</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

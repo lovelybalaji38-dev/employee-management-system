@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Admin Portal Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-6 col-lg-5 col-xl-4">
+        <div class="glass-card auth-card shadow-lg p-4 p-md-5" style="border-top: 4px solid var(--danger);">
+            <div class="text-center mb-4">
+                <i class="bi bi-shield-lock display-4 text-danger"></i>
+                <h2 class="mt-2 fw-bold">Admin Login</h2>
+                <p class="text-muted">Access your system administration dashboard</p>
+            </div>
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Username</label>
+                    {{ form.username }}
+                    <div class="invalid-feedback">Please enter your username.</div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Password</label>
+                    <div class="input-group">
+                        {{ form.password }}
+                        <i class="bi bi-eye toggle-password-icon password-toggle-icon cursor-pointer fs-5"></i>
+                    </div>
+                    <div class="invalid-feedback">Please enter your password.</div>
+                </div>
+                
+                <div class="mb-4 d-flex justify-content-between align-items-center">
+                    <div class="form-check">
+                        {{ form.remember_me }}
+                        <label class="form-check-label text-muted" for="{{ form.remember_me.id_for_label }}">
+                            Remember me
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-danger w-100 py-2 fw-bold fs-5 shadow-sm">
+                    Login to Admin Portal
+                </button>
+            </form>
+        </div>
+        <div class="text-center mt-3">
+            <a href="{% url 'login_select' %}" class="text-muted text-decoration-none"><i class="bi bi-arrow-left"></i> Back to selection</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Employee Detail{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-4 mb-4">
+        <div class="glass-card text-center p-4">
+            <img src="{{ employee.profile_image.url }}" alt="Profile" class="profile-img-lg mb-3">
+            <h4 class="fw-bold">{{ employee.user.first_name }} {{ employee.user.last_name }}</h4>
+            <p class="text-muted">{{ employee.user.role }}</p>
+            {% if employee.status == 'Active' %}
+                <span class="badge bg-success mb-3">Active</span>
+            {% else %}
+                <span class="badge bg-danger mb-3">Inactive</span>
+            {% endif %}
+            
+            <div class="d-grid gap-2">
+                {% if user.role in 'Admin,HR' %}
+                <a href="{% url 'edit_employee' employee.pk %}" class="btn btn-primary">Edit Profile</a>
+                {% endif %}
+                <a href="mailto:{{ employee.user.email }}" class="btn btn-outline-primary">Send Email</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="glass-card p-4 h-100">
+            <h4 class="fw-bold mb-4 border-bottom pb-2">Information</h4>
+            
+            <div class="row mb-3">
+                <div class="col-sm-4 text-muted">Employee ID</div>
+                <div class="col-sm-8 fw-bold">{{ employee.employee_id }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 text-muted">Email</div>
+                <div class="col-sm-8 fw-bold">{{ employee.user.email }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 text-muted">Phone Number</div>
+                <div class="col-sm-8 fw-bold">{{ employee.phone_number }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 text-muted">Department</div>
+                <div class="col-sm-8 fw-bold">{{ employee.department.name|default:"Not Assigned" }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 text-muted">Joining Date</div>
+                <div class="col-sm-8 fw-bold">{{ employee.joining_date|date:"M d, Y" }}</div>
+            </div>
+            {% if user.role in 'Admin,HR' or user == employee.user %}
+            <div class="row mb-3">
+                <div class="col-sm-4 text-muted">Salary</div>
+                <div class="col-sm-8 fw-bold">₹{{ employee.salary }}</div>
+            </div>
+            {% endif %}
+            
+            <h5 class="fw-bold mt-5 mb-3 border-bottom pb-2">Assigned Tasks</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in employee.tasks.all %}
+                        <tr>
+                            <td>{{ task.title }}</td>
+                            <td>{{ task.deadline|date:"M d, Y" }}</td>
+                            <td>
+                                {% if task.status == 'Pending' %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% elif task.status == 'In Progress' %}
+                                    <span class="badge bg-info text-dark">In Progress</span>
+                                {% else %}
+                                    <span class="badge bg-success">Completed</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-muted text-center py-2">No tasks assigned.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

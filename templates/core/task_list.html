@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Tasks{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <h2 class="fw-bold text-primary">Tasks</h2>
+    {% if user.role in 'Admin,HR' %}
+    <a href="{% url 'add_task' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Assign Task
+    </a>
+    {% endif %}
+</div>
+
+<div class="glass-card p-4">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Task Title</th>
+                    <th>Description</th>
+                    <th>Assigned To</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in page_obj %}
+                <tr>
+                    <td class="fw-bold">{{ task.title }}</td>
+                    <td class="text-muted text-truncate" style="max-width: 200px;" title="{{ task.description }}">
+                        {{ task.description }}
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="{{ task.assigned_to.profile_image.url }}" class="profile-img-sm me-2" alt="">
+                            {{ task.assigned_to.user.first_name }}
+                        </div>
+                    </td>
+                    <td>{{ task.deadline|date:"M d, Y" }}</td>
+                    <td>
+                        {% if task.status == 'Pending' %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% elif task.status == 'In Progress' %}
+                            <span class="badge bg-info text-dark">In Progress</span>
+                        {% else %}
+                            <span class="badge bg-success">Completed</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user.role in 'Admin,HR' or user == task.assigned_to.user %}
+                        <a href="{% url 'update_task_status' task.pk %}" class="btn btn-sm btn-outline-primary">Update Status</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-4 text-muted">No tasks found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+        
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

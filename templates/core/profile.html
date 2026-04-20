@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="row mt-4 justify-content-center">
+    <div class="col-md-10 col-lg-8">
+        <div class="glass-card p-4">
+            <h3 class="fw-bold text-primary mb-4 border-bottom pb-2">My Profile</h3>
+            
+            <div class="row align-items-center mb-4">
+                <div class="col-sm-4 text-center mb-3 mb-sm-0">
+                    <img src="{{ employee.profile_image.url }}" alt="Profile" class="profile-img-lg mb-2">
+                    <h5 class="fw-bold mb-0">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <p class="text-muted small mb-0">{{ user.role }}</p>
+                    {% if employee.status == 'Active' %}
+                        <span class="badge bg-success mt-2">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger mt-2">Inactive</span>
+                    {% endif %}
+                </div>
+                <div class="col-sm-8">
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Employee ID</div>
+                        <div class="col-7 fw-bold">{{ employee.employee_id }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Email</div>
+                        <div class="col-7 fw-bold">{{ user.email }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Phone Number</div>
+                        <div class="col-7 fw-bold">{{ employee.phone_number }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Department</div>
+                        <div class="col-7 fw-bold">{{ employee.department.name|default:"Not Assigned" }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Joining Date</div>
+                        <div class="col-7 fw-bold">{{ employee.joining_date|date:"M d, Y" }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info" role="alert">
+                <i class="bi bi-info-circle-fill me-2"></i> To update your profile information, please contact HR or an Administrator.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
