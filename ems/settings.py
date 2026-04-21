@@ -24,7 +24,7 @@ import os
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret")
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -124,7 +124,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 # Custom User Model
 AUTH_USER_MODEL = 'core.User'

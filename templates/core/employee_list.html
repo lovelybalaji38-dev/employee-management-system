@@ -36,6 +36,7 @@
 
             <!-- Profile Image -->
             <div class="mb-3">
+                {% load static %}
                 {% if employee.profile_image %}
                     <img src="{{ employee.profile_image.url }}"
                          alt="{{ employee.user.first_name }}"

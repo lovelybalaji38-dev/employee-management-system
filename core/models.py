@@ -34,7 +34,7 @@ class Employee(models.Model):
     salary = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     joining_date = models.DateField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Active')
-    profile_image = models.ImageField(upload_to='profiles/', default='profiles/default_avatar.png', blank=True)
+    profile_image = models.ImageField(upload_to='profiles/',blank=True,null=True)
 
     def save(self, *args, **kwargs):
         if not self.employee_id:
@@ -62,3 +62,7 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+
+
