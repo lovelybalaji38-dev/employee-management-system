@@ -24,7 +24,7 @@ import os
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret")
 
-DEBUG = os.environ.get("DEBUG", "True") == "True"
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
