@@ -187,10 +187,23 @@ def add_hr(request):
     return render(request, 'core/hr_form.html', {'form': form, 'title': 'Create HR User'})
 
 @login_required
+@admin_required
+def delete_hr(request, pk):
+    hr_user = get_object_or_404(User, pk=pk, role='HR')
+    if request.method == 'POST':
+        hr_user.delete()
+        messages.success(request, "HR User deleted successfully.")
+        return redirect('manage_hr')
+    return render(request, 'core/hr_confirm_delete.html', {'hr': hr_user})
+
+@login_required
 @admin_or_hr_required
 def employee_list(request):
     query = request.GET.get('q', '')
     employees = Employee.objects.all().order_by('-joining_date')
+    
+    if request.user.role == 'HR':
+        employees = employees.exclude(user__role='Admin')
     
     if query:
         employees = employees.filter(

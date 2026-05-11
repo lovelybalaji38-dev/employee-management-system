@@ -18,6 +18,7 @@ urlpatterns = [
     # HR Management (Admin Only)
     path('manage-hr/', views.manage_hr, name='manage_hr'),
     path('manage-hr/add/', views.add_hr, name='add_hr'),
+    path('manage-hr/<int:pk>/delete/', views.delete_hr, name='delete_hr'),
     
     # Employee Management (Admin/HR)
     path('employees/', views.employee_list, name='employee_list'),

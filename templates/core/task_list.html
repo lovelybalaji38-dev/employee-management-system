@@ -33,7 +33,12 @@
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <img src="{{ task.assigned_to.profile_image.url }}" class="profile-img-sm me-2" alt="">
+                            {% load static %}
+                            {% if task.assigned_to.profile_image %}
+                                <img src="{{ task.assigned_to.profile_image.url }}" class="profile-img-sm me-2" alt="">
+                            {% else %}
+                                <img src="{% static 'images/default_avatar.png' %}" class="profile-img-sm me-2" alt="Default">
+                            {% endif %}
                             {{ task.assigned_to.user.first_name }}
                         </div>
                     </td>

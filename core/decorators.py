@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseForbidden
+from django.shortcuts import redirect
+from django.contrib import messages
 
 def role_required(*allowed_roles):
     def check_role(user):
@@ -14,7 +16,11 @@ def role_required(*allowed_roles):
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
             if not check_role(request.user):
-                return HttpResponseForbidden("<h1>403 Forbidden</h1><p>You do not have permission to access this page.</p>")
+                messages.error(request, "You do not have permission to access this page.")
+                if request.user.is_authenticated:
+                    from core.views import get_dashboard_url
+                    return redirect(get_dashboard_url(request.user))
+                return redirect('employee_login')
             return view_func(request, *args, **kwargs)
         return _wrapped_view
     return decorator

@@ -24,6 +24,27 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav me-auto d-md-none mt-2">
+                    {% if request.user.is_superuser %}
+                    <li class="nav-item"><a href="{% url 'admin_dashboard' %}" class="nav-link"><i class="bi bi-speedometer2 me-2"></i> Admin Dashboard</a></li>
+                    <li class="nav-item"><a href="{% url 'manage_hr' %}" class="nav-link"><i class="bi bi-person-badge me-2"></i> Manage HR</a></li>
+                    <li class="nav-item"><a href="{% url 'employee_list' %}" class="nav-link"><i class="bi bi-people me-2"></i> Manage Employees</a></li>
+                    <li class="nav-item"><a href="{% url 'task_list' %}" class="nav-link"><i class="bi bi-list-check me-2"></i> View Tasks</a></li>
+                    
+                    {% elif user.role == 'HR' %}
+                    <li class="nav-item"><a href="{% url 'hr_dashboard' %}" class="nav-link"><i class="bi bi-speedometer2 me-2"></i> HR Dashboard</a></li>
+                    <li class="nav-item"><a href="{% url 'employee_list' %}" class="nav-link"><i class="bi bi-people me-2"></i> Manage Employees</a></li>
+                    <li class="nav-item"><a href="{% url 'task_list' %}" class="nav-link"><i class="bi bi-list-check me-2"></i> Task Tracking</a></li>
+                    <li class="nav-item"><a href="{% url 'add_task' %}" class="nav-link"><i class="bi bi-plus-circle me-2"></i> Assign Tasks</a></li>
+                    
+                    {% elif user.role == 'Employee' %}
+                    <li class="nav-item"><a href="{% url 'employee_dashboard' %}" class="nav-link"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                    <li class="nav-item"><a href="{% url 'task_list' %}" class="nav-link"><i class="bi bi-list-check me-2"></i> My Tasks</a></li>
+                    <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link"><i class="bi bi-person me-2"></i> My Profile</a></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
                 <ul class="navbar-nav ms-auto align-items-center">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
@@ -32,14 +53,14 @@
                             </span>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-danger btn-sm ms-3" href="{% url 'logout' %}">Logout</a>
+                            <a class="btn btn-outline-danger btn-sm ms-3 mt-2 mt-md-0" href="{% url 'logout' %}">Logout</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary btn-sm me-2" href="{% url 'login_select' %}">Login</a>
+                            <a class="btn btn-outline-primary btn-sm me-2 mt-2 mt-md-0" href="{% url 'login_select' %}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-primary btn-sm" href="{% url 'register' %}">Register</a>
+                            <a class="btn btn-primary btn-sm mt-2 mt-md-0" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>

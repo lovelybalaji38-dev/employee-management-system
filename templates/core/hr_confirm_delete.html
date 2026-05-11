@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Delete HR User{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="glass-card p-4">
+            <h3 class="fw-bold text-danger text-center mb-4">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>Delete HR User
+            </h3>
+            
+            <p class="text-center mb-4">
+                Are you sure you want to delete HR User <strong>{{ hr.first_name }} {{ hr.last_name }}</strong> ({{ hr.username }})?
+                This action cannot be undone.
+            </p>
+
+            <form method="post" class="d-flex justify-content-between">
+                {% csrf_token %}
+                <a href="{% url 'manage_hr' %}" class="btn btn-outline-secondary w-50 me-2">Cancel</a>
+                <button type="submit" class="btn btn-danger w-50 ms-2">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

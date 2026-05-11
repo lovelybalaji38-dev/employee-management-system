@@ -19,6 +19,7 @@
                     <th>Username</th>
                     <th>Email</th>
                     <th>Date Joined</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,11 @@
                     <td><span class="badge bg-warning text-dark">{{ hr.username }}</span></td>
                     <td>{{ hr.email }}</td>
                     <td>{{ hr.date_joined|date:"M d, Y" }}</td>
+                    <td>
+                        <a href="{% url 'delete_hr' hr.pk %}" class="btn btn-sm btn-outline-danger" title="Delete HR">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>

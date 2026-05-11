@@ -81,7 +81,7 @@
                     </a>
                     {% endif %}
 
-                    {% if user.role == 'Admin' %}
+                    {% if user.role == 'Admin' or user.role == 'HR' %}
                     <a href="{% url 'delete_employee' employee.pk %}"
                        class="btn btn-sm btn-outline-danger">
                         <i class="bi bi-trash"></i>

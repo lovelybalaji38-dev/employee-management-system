@@ -69,7 +69,12 @@
                     <td><strong>{{ task.title }}</strong></td>
                     <td>{{ task.assigned_by.first_name|default:"System" }}</td>
                     <td>
-                        <img src="{{ task.assigned_to.profile_image.url }}" alt="Profile" class="profile-img-sm me-2">
+                        {% load static %}
+                        {% if task.assigned_to.profile_image %}
+                            <img src="{{ task.assigned_to.profile_image.url }}" alt="Profile" class="profile-img-sm me-2">
+                        {% else %}
+                            <img src="{% static 'images/default_avatar.png' %}" alt="Profile" class="profile-img-sm me-2">
+                        {% endif %}
                         {{ task.assigned_to.user.first_name }}
                     </td>
                     <td>{{ task.deadline|date:"M d, Y" }}</td>
